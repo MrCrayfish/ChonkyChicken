@@ -10,7 +10,9 @@ repositories {
 }
 
 dependencies {
-    implementation("net.dv8tion:JDA:${project.jda_version}")
+    implementation("net.dv8tion:JDA:${project.jda_version}") {
+        exclude module: 'opus-java' // Disables audio natives
+    }
     testImplementation platform("org.junit:junit-bom:${project.junit_version}")
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
