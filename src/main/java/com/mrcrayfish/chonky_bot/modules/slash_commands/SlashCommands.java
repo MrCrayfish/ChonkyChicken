@@ -2,6 +2,7 @@ package com.mrcrayfish.chonky_bot.modules.slash_commands;
 
 import com.mrcrayfish.chonky_bot.ChonkyBot;
 import com.mrcrayfish.chonky_bot.modules.slash_commands.commands.PrintRulesCommand;
+import com.mrcrayfish.chonky_bot.modules.slash_commands.commands.PruneCommand;
 import com.mrcrayfish.chonky_bot.modules.slash_commands.commands.SlashCommand;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
@@ -54,5 +55,6 @@ public final class SlashCommands
     static
     {
         register(new PrintRulesCommand());
+        register(new PruneCommand());
     }
 }
