@@ -4,6 +4,7 @@ import com.mrcrayfish.chonkybot.ChonkyBot;
 import com.mrcrayfish.chonkybot.commands.PrintRulesCommand;
 import com.mrcrayfish.chonkybot.commands.SlashCommand;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.SubscribeEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -31,7 +32,14 @@ public final class SlashCommands
     }
 
     @SubscribeEvent
-    public static void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event)
+    private static void onReady(ReadyEvent event)
+    {
+        // Update slash commands
+        event.getJDA().updateCommands().addCommands(SlashCommands.all().values().stream().map(SlashCommand::data).toList()).queue();
+    }
+
+    @SubscribeEvent
+    private static void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event)
     {
         if(event.getGuild() == null)
             return;
