@@ -1,6 +1,7 @@
 package com.mrcrayfish.chonkybot;
 
 import com.google.common.collect.ImmutableMap;
+import com.mrcrayfish.chonkybot.commands.SlashCommand;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
@@ -23,7 +24,7 @@ public class ChonkyBot extends ListenerAdapter
     public static final Logger LOGGER = LoggerFactory.getLogger(ChonkyBot.class);
 
     private final JDA bot;
-    private final Map<String, BotCommand> commands;
+    private final Map<String, SlashCommand> commands;
 
     public ChonkyBot(String token)
     {
@@ -38,11 +39,11 @@ public class ChonkyBot extends ListenerAdapter
     {
         // Register slash commands
         CommandListUpdateAction commands = this.bot.updateCommands();
-        commands.addCommands(this.commands.values().stream().map(BotCommand::data).toList());
+        commands.addCommands(this.commands.values().stream().map(SlashCommand::data).toList());
         commands.queue();
     }
 
-    private Map<String, BotCommand> buildCommands()
+    private Map<String, SlashCommand> buildCommands()
     {
         return SlashCommands.all().values().stream()
             .collect(ImmutableMap.toImmutableMap(command -> command.data()
@@ -56,7 +57,7 @@ public class ChonkyBot extends ListenerAdapter
             return;
         Optional.ofNullable(this.commands.get(event.getName())).ifPresentOrElse(command -> {
             LOGGER.info("'{}' executed the command '/{}'", event.getUser().getName(), event.getName());
-            command.handler().accept(this, event);
+            command.handle(this, event);
         }, () -> {
             LOGGER.error("Unknown or unregistered command '{}'", event.getName());
         });
