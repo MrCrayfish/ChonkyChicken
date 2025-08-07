@@ -1,10 +1,7 @@
 package com.mrcrayfish.chonkybot.commands;
 
-import com.mrcrayfish.chonkybot.ChonkyBot;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
-
-import java.util.function.BiConsumer;
 
 /**
  * Author: MrCrayfish
@@ -23,5 +20,5 @@ public abstract class SlashCommand
         return this.data;
     }
 
-    public abstract void handle(ChonkyBot bot, SlashCommandInteractionEvent event);
+    public abstract void handle(SlashCommandInteractionEvent event);
 }
