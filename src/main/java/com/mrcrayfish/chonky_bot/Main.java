@@ -1,4 +1,4 @@
-package com.mrcrayfish.chonkybot;
+package com.mrcrayfish.chonky_bot;
 
 import io.github.cdimascio.dotenv.Dotenv;
 

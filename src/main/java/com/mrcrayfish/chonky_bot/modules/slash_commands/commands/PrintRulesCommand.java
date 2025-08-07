@@ -1,11 +1,12 @@
-package com.mrcrayfish.chonkybot.commands;
+package com.mrcrayfish.chonky_bot.modules.slash_commands.commands;
 
-import com.mrcrayfish.chonkybot.Constants;
+import com.mrcrayfish.chonky_bot.Constants;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.channel.ChannelType;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.InteractionContextType;
 import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 
@@ -20,7 +21,7 @@ public class PrintRulesCommand extends SlashCommand
     public PrintRulesCommand()
     {
         super(Commands.slash("print_rules", "Prints the embeds for the rules channel"));
-        this.data.setGuildOnly(true);
+        this.data.setContexts(InteractionContextType.GUILD);
         this.data.setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.ADMINISTRATOR));
     }
 

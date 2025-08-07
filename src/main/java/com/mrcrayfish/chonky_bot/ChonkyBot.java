@@ -1,7 +1,7 @@
-package com.mrcrayfish.chonkybot;
+package com.mrcrayfish.chonky_bot;
 
-import com.mrcrayfish.chonkybot.modules.DeleteEveryoneAndHereMention;
-import com.mrcrayfish.chonkybot.modules.SlashCommands;
+import com.mrcrayfish.chonky_bot.modules.slash_commands.SlashCommands;
+import com.mrcrayfish.chonky_bot.modules.autodelete.AutoDelete;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.hooks.AnnotatedEventManager;
 import net.dv8tion.jda.api.requests.GatewayIntent;
@@ -24,7 +24,9 @@ public class ChonkyBot
                 .enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT)
                 .enableCache(CacheFlag.MEMBER_OVERRIDES)
                 .setEventManager(new AnnotatedEventManager())
-                .addEventListeners(SlashCommands.class, DeleteEveryoneAndHereMention.class)
-                .build();
+                .addEventListeners(
+                    SlashCommands.class,
+                    AutoDelete.class
+                ).build();
     }
 }

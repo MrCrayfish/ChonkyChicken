@@ -1,8 +1,8 @@
-package com.mrcrayfish.chonkybot.modules;
+package com.mrcrayfish.chonky_bot.modules.slash_commands;
 
-import com.mrcrayfish.chonkybot.ChonkyBot;
-import com.mrcrayfish.chonkybot.commands.PrintRulesCommand;
-import com.mrcrayfish.chonkybot.commands.SlashCommand;
+import com.mrcrayfish.chonky_bot.ChonkyBot;
+import com.mrcrayfish.chonky_bot.modules.slash_commands.commands.PrintRulesCommand;
+import com.mrcrayfish.chonky_bot.modules.slash_commands.commands.SlashCommand;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.SubscribeEvent;

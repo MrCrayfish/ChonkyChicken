@@ -1,4 +1,4 @@
-package com.mrcrayfish.chonkybot.commands;
+package com.mrcrayfish.chonky_bot.modules.slash_commands.commands;
 
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.User;
@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.entities.channel.ChannelType;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.InteractionContextType;
 import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -28,7 +29,7 @@ public class PruneCommand extends SlashCommand
         this.data.addOption(OptionType.INTEGER, "search_depth", "The maximum amount of messages to scan (Default: 200, Max: 500)");
         this.data.addOption(OptionType.BOOLEAN, "all_channels", "Prune in every channel (Default: false)");
         this.data.setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.MESSAGE_MANAGE));
-        this.data.setGuildOnly(true);
+        this.data.setContexts(InteractionContextType.GUILD);
     }
 
     @Override

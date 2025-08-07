@@ -1,4 +1,4 @@
-package com.mrcrayfish.chonkybot.commands;
+package com.mrcrayfish.chonky_bot.modules.slash_commands.commands;
 
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
