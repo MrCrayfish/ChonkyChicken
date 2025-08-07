@@ -1,5 +1,6 @@
 package com.mrcrayfish.chonkybot;
 
+import com.mrcrayfish.chonkybot.modules.DeleteEveryoneAndHereMention;
 import com.mrcrayfish.chonkybot.modules.SlashCommands;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.hooks.AnnotatedEventManager;
@@ -20,8 +21,10 @@ public class ChonkyBot
     public ChonkyBot(String token)
     {
         JDABuilder.createLight(token, Collections.emptyList())
+                .enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT)
+                .enableCache(CacheFlag.MEMBER_OVERRIDES)
                 .setEventManager(new AnnotatedEventManager())
-                .addEventListeners(this, SlashCommands.class)
+                .addEventListeners(SlashCommands.class, DeleteEveryoneAndHereMention.class)
                 .build();
     }
 }
