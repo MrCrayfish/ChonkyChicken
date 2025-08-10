@@ -1,5 +1,6 @@
 package com.mrcrayfish.chonky_bot;
 
+import com.mrcrayfish.chonky_bot.modules.fortune.Fortune;
 import com.mrcrayfish.chonky_bot.modules.slash_commands.SlashCommands;
 import com.mrcrayfish.chonky_bot.modules.autodelete.AutoDelete;
 import net.dv8tion.jda.api.JDABuilder;
@@ -26,7 +27,8 @@ public class ChonkyBot
                 .setEventManager(new AnnotatedEventManager())
                 .addEventListeners(
                     SlashCommands.class,
-                    AutoDelete.class
+                    AutoDelete.class,
+                    Fortune.class
                 ).build();
     }
 }
