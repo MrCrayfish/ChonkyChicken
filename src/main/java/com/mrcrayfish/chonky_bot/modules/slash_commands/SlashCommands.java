@@ -1,9 +1,7 @@
 package com.mrcrayfish.chonky_bot.modules.slash_commands;
 
 import com.mrcrayfish.chonky_bot.ChonkyBot;
-import com.mrcrayfish.chonky_bot.modules.slash_commands.commands.PrintRulesCommand;
-import com.mrcrayfish.chonky_bot.modules.slash_commands.commands.PruneCommand;
-import com.mrcrayfish.chonky_bot.modules.slash_commands.commands.SlashCommand;
+import com.mrcrayfish.chonky_bot.modules.slash_commands.commands.*;
 import net.dv8tion.jda.api.components.container.Container;
 import net.dv8tion.jda.api.components.separator.Separator;
 import net.dv8tion.jda.api.components.textdisplay.TextDisplay;
@@ -51,12 +49,14 @@ public final class SlashCommands
         Optional.ofNullable(COMMANDS.get(event.getInteraction().getName())).ifPresentOrElse(command -> {
             ChonkyBot.LOGGER.info("'{}' executed the command '/{}'", event.getUser().getName(), event.getName());
             Response response = command.handle(event);
-            String title = response.success() ? "**:thumbsup: Success**" : "**:no_entry: Command Failed**";
-            event.replyComponents(Container.of(
-                TextDisplay.of(title),
-                Separator.createDivider(Separator.Spacing.SMALL),
-                TextDisplay.of(response.message())
-            )).useComponentsV2().setEphemeral(true).queue();
+            if(!event.isAcknowledged()) {
+                String title = response.success() ? "**:thumbsup: Success**" : "**:no_entry: Command Failed**";
+                event.replyComponents(Container.of(
+                        TextDisplay.of(title),
+                        Separator.createDivider(Separator.Spacing.SMALL),
+                        TextDisplay.of(response.message())
+                )).useComponentsV2().setEphemeral(true).queue();
+            }
         }, () -> {
             ChonkyBot.LOGGER.error("Unknown or unregistered command '{}'", event.getName());
         });
@@ -66,5 +66,7 @@ public final class SlashCommands
     {
         register(new PrintRulesCommand());
         register(new PruneCommand());
+        register(new UploadConfig());
+        register(new DownloadConfig());
     }
 }
