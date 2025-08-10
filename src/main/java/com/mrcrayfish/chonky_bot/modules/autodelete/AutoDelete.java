@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
-public class AutoDelete
+public final class AutoDelete
 {
     private static final List<DeletionRule> RULES = List.of(
         new MentionsEveryoneOrHere(),
