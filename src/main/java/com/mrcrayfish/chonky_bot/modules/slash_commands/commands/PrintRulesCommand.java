@@ -1,6 +1,7 @@
 package com.mrcrayfish.chonky_bot.modules.slash_commands.commands;
 
 import com.mrcrayfish.chonky_bot.Constants;
+import com.mrcrayfish.chonky_bot.modules.slash_commands.Response;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.components.container.Container;
@@ -33,10 +34,10 @@ public class PrintRulesCommand extends SlashCommand
     }
 
     @Override
-    public void handle(SlashCommandInteractionEvent event)
+    public Response handle(SlashCommandInteractionEvent event)
     {
-        if(event.getMessageChannel().getType() != ChannelType.TEXT)
-            return;
+        if(event.getChannelType() != ChannelType.TEXT)
+            return Response.fail("Only text channels are allowed to run this command");
 
         Container container = Container.of(
             Section.of(
@@ -62,5 +63,7 @@ public class PrintRulesCommand extends SlashCommand
             TextDisplay.of("*Community Guidelines:* https://discord.com/guidelines")
         ).withAccentColor(Constants.COLOUR_YELLOW);
         event.getMessageChannel().sendMessageComponents(container).useComponentsV2().queue();
+
+        return Response.success("Rules printed successfully :sunglasses:");
     }
 }

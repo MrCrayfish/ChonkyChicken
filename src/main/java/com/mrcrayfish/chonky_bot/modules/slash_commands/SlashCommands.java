@@ -4,6 +4,9 @@ import com.mrcrayfish.chonky_bot.ChonkyBot;
 import com.mrcrayfish.chonky_bot.modules.slash_commands.commands.PrintRulesCommand;
 import com.mrcrayfish.chonky_bot.modules.slash_commands.commands.PruneCommand;
 import com.mrcrayfish.chonky_bot.modules.slash_commands.commands.SlashCommand;
+import net.dv8tion.jda.api.components.container.Container;
+import net.dv8tion.jda.api.components.separator.Separator;
+import net.dv8tion.jda.api.components.textdisplay.TextDisplay;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.SubscribeEvent;
@@ -13,6 +16,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Author: MrCrayfish
@@ -46,7 +50,13 @@ public final class SlashCommands
             return;
         Optional.ofNullable(COMMANDS.get(event.getInteraction().getName())).ifPresentOrElse(command -> {
             ChonkyBot.LOGGER.info("'{}' executed the command '/{}'", event.getUser().getName(), event.getName());
-            command.handle(event);
+            Response response = command.handle(event);
+            String title = response.success() ? "**:thumbsup: Success**" : "**:no_entry: Command Failed**";
+            event.replyComponents(Container.of(
+                TextDisplay.of(title),
+                Separator.createDivider(Separator.Spacing.SMALL),
+                TextDisplay.of(response.message())
+            )).useComponentsV2().setEphemeral(true).queue();
         }, () -> {
             ChonkyBot.LOGGER.error("Unknown or unregistered command '{}'", event.getName());
         });

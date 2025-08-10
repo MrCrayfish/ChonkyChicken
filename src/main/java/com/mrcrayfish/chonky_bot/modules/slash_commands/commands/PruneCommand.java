@@ -1,5 +1,7 @@
 package com.mrcrayfish.chonky_bot.modules.slash_commands.commands;
 
+import com.mrcrayfish.chonky_bot.ChonkyBot;
+import com.mrcrayfish.chonky_bot.modules.slash_commands.Response;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.components.container.Container;
@@ -42,11 +44,11 @@ public class PruneCommand extends SlashCommand
     }
 
     @Override
-    public void handle(SlashCommandInteractionEvent event)
+    public Response handle(SlashCommandInteractionEvent event)
     {
         // Only allow from text channels
         if(event.getChannelType() != ChannelType.TEXT)
-            return;
+            return Response.fail("Only text channels are allowed to run this command");
 
         int limitPerChannel = event.getOption("count", 1, mapping -> Math.clamp(mapping.getAsInt(), 1, 100));
         User targetUser = event.getOption("user", OptionMapping::getAsUser);
@@ -56,14 +58,20 @@ public class PruneCommand extends SlashCommand
 
         Member member = event.getMember();
         if(member == null)
-            return;
-
-        if(allChannels && !member.isOwner())
-            return;
+        {
+            ChonkyBot.LOGGER.info("No member found when running /prune command. Invoker was {}", event.getUser().getName());
+            return Response.fail();
+        }
 
         Guild guild = event.getGuild();
         if(guild == null)
-            return;
+        {
+            ChonkyBot.LOGGER.info("No guild found when running /prune command. Invoker was {}", event.getUser().getName());
+            return Response.fail();
+        }
+
+        if(allChannels && !member.isOwner())
+            return Response.fail("Only administrators can prune all channels");
 
         List<TextChannel> channels = new ArrayList<>();
         if(allChannels)
@@ -93,18 +101,10 @@ public class PruneCommand extends SlashCommand
                 return counter.get();
             }).join()).reduce(Integer::sum).orElse(0);
 
-        this.sendResponse(event, targetUser != null
-                ? "Pruned `%s` messages from user: `%s`".formatted(pruneCount, targetUser.getEffectiveName())
-                : "Pruned `%s` messages".formatted(pruneCount));
-    }
-
-    private void sendResponse(IReplyCallback callback, String message)
-    {
-        Container container = Container.of(
-                TextDisplay.of("**:thumbsup: Job Complete**"),
-                Separator.createDivider(Separator.Spacing.SMALL),
-                TextDisplay.of(message)
-        );
-        callback.replyComponents(container).useComponentsV2().setEphemeral(true).queue();
+        if(targetUser != null)
+        {
+            return Response.success("Pruned `%s` messages from user: `%s`".formatted(pruneCount, targetUser.getEffectiveName()));
+        }
+        return Response.success("Pruned `%s` messages".formatted(pruneCount));
     }
 }
