@@ -13,6 +13,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
@@ -121,5 +122,11 @@ public class GuildConfig
         {
             return false;
         }
+    }
+
+    public static Path path(Guild guild)
+    {
+        get(guild); // Ensure generated
+        return Paths.get("configs", "%s.yaml".formatted(guild.getIdLong()));
     }
 }

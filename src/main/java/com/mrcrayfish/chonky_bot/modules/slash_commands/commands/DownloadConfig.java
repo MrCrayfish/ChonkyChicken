@@ -1,8 +1,10 @@
 
 package com.mrcrayfish.chonky_bot.modules.slash_commands.commands;
 
+import com.mrcrayfish.chonky_bot.GuildConfig;
 import com.mrcrayfish.chonky_bot.modules.slash_commands.Response;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.InteractionContextType;
 import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
@@ -23,7 +25,11 @@ public class DownloadConfig extends SlashCommand
     @Override
     public Response handle(SlashCommandInteractionEvent event)
     {
-        event.replyFiles(FileUpload.fromData(Path.of("config.yml"))).setEphemeral(true).queue();
+        Guild guild = event.getGuild();
+        if(guild == null)
+            return Response.fail("Unknown guild");
+
+        event.replyFiles(FileUpload.fromData(GuildConfig.path(guild), "config.yaml")).setEphemeral(true).queue();
         return Response.success("Successfully uploaded config");
     }
 }
