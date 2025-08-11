@@ -23,7 +23,7 @@ public class PingCommand extends SlashCommand
     {
         super(Commands.slash("ping", "Pings to test if Chonky is not taking a nap!"));
         this.data.setContexts(InteractionContextType.GUILD);
-        this.data.setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.ADMINISTRATOR));
+        this.data.setDefaultPermissions(DefaultMemberPermissions.DISABLED);
     }
 
     @Override

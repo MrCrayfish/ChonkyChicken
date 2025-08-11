@@ -19,7 +19,7 @@ public class DownloadConfig extends SlashCommand
     {
         super(Commands.slash("download_config", "Download the config file for the bot"));
         this.data.setContexts(InteractionContextType.GUILD);
-        this.data.setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.ADMINISTRATOR));
+        this.data.setDefaultPermissions(DefaultMemberPermissions.DISABLED);
     }
 
     @Override

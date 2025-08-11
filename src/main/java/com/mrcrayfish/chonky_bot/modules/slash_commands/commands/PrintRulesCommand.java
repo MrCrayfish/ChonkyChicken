@@ -30,7 +30,7 @@ public class PrintRulesCommand extends SlashCommand
     {
         super(Commands.slash("print_rules", "Prints the embeds for the rules channel"));
         this.data.setContexts(InteractionContextType.GUILD);
-        this.data.setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.ADMINISTRATOR));
+        this.data.setDefaultPermissions(DefaultMemberPermissions.DISABLED);
     }
 
     @Override

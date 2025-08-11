@@ -38,7 +38,7 @@ public class PruneCommand extends SlashCommand
         this.data.addOption(OptionType.INTEGER, "count", "The maximum number of messages to be removed per channel (Min: 1, Max: 100)", true);
         this.data.addOption(OptionType.USER, "user", "A specific user to prune");
         this.data.addOption(OptionType.INTEGER, "search_depth", "The amount of messages to scan in a channel's history (Default: 100, Max: 500)");
-        this.data.addOption(OptionType.BOOLEAN, "all_channels", "Prune in every channel (Default: false)");
+        this.data.addOption(OptionType.BOOLEAN, "all_channels", "[Admins Only] Prune in every channel. (Default: false)");
         this.data.setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.MESSAGE_MANAGE));
         this.data.setContexts(InteractionContextType.GUILD);
     }

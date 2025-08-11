@@ -2,7 +2,6 @@ package com.mrcrayfish.chonky_bot.modules.slash_commands.commands;
 
 import com.mrcrayfish.chonky_bot.GuildConfig;
 import com.mrcrayfish.chonky_bot.modules.slash_commands.Response;
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
@@ -19,7 +18,7 @@ public class UploadConfig extends SlashCommand
         super(Commands.slash("upload_config", "Uploads a config file to the bot"));
         this.data.addOption(OptionType.ATTACHMENT, "file", "A YAML file", true);
         this.data.setContexts(InteractionContextType.GUILD);
-        this.data.setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.ADMINISTRATOR));
+        this.data.setDefaultPermissions(DefaultMemberPermissions.DISABLED);
     }
 
     @Override
