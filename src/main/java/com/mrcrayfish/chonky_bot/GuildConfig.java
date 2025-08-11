@@ -71,24 +71,40 @@ public class GuildConfig
     {
         long guildId = guild.getIdLong();
         YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
+            .defaultOptions(opts -> opts.shouldCopyDefaults(true))
             .indent(2).nodeStyle(NodeStyle.BLOCK)
             .path(Paths.get("configs", "%s.yaml".formatted(guildId)))
             .build();
 
+        CommentedConfigurationNode node;
         try
         {
-            final CommentedConfigurationNode node = loader.load();
-            GuildConfig config = node.get(GuildConfig.class, (Supplier<GuildConfig>) GuildConfig::new);
-            CONFIGS.put(guildId, config);
-            loader.save(node); // Save to update style/indent
-            return config;
+            node = loader.load();
         }
         catch(ConfigurateException e)
         {
-            GuildConfig config = new GuildConfig();
-            CONFIGS.put(guildId, config);
-            return config;
+            node = CommentedConfigurationNode.root();
         }
+
+        GuildConfig config;
+        try
+        {
+            config = node.get(GuildConfig.class, (Supplier<GuildConfig>) GuildConfig::new);
+        }
+        catch(SerializationException e)
+        {
+            throw new RuntimeException(e);
+        }
+
+        try
+        {
+            loader.save(node);
+        }
+        catch(ConfigurateException e)
+        {
+            throw new RuntimeException(e);
+        }
+        return config;
     }
 
     public static boolean load(Guild guild, String url)
