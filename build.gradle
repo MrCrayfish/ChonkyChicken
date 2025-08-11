@@ -13,7 +13,7 @@ dependencies {
     implementation("io.github.cdimascio:dotenv-java:${project.dotenv_java_version}")
     implementation("com.google.guava:guava:${project.guava_version}")
     implementation("ch.qos.logback:logback-classic:${project.logback_version}")
-    implementation("org.spongepowered:configurate-yaml:${project.configurate_version}")
+    implementation("de.exlll:configlib-yaml:${project.configlib_verison}")
     implementation("net.dv8tion:JDA:${project.jda_version}") {
         exclude module: 'opus-java' // Disables audio natives
     }

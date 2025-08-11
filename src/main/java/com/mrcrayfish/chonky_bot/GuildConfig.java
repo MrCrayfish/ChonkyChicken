@@ -1,39 +1,37 @@
 package com.mrcrayfish.chonky_bot;
 
+import de.exlll.configlib.*;
 import net.dv8tion.jda.api.entities.Guild;
-import org.spongepowered.configurate.CommentedConfigurationNode;
-import org.spongepowered.configurate.ConfigurateException;
-import org.spongepowered.configurate.objectmapping.ConfigSerializable;
-import org.spongepowered.configurate.objectmapping.meta.Comment;
-import org.spongepowered.configurate.objectmapping.meta.Required;
-import org.spongepowered.configurate.yaml.NodeStyle;
-import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Supplier;
+import java.util.*;
 
-@ConfigSerializable
-public class GuildConfig
+@Configuration
+public final class GuildConfig
 {
-    @Required
+    @Comment("Module related properties")
     private Modules modules = new Modules();
+
+    public Set<MinecraftMod> minecraftMods()
+    {
+        return this.minecraftMods;
+    }
 
     public Modules modules()
     {
         return this.modules;
     }
 
-    @ConfigSerializable
+    @Configuration
     public static class Modules
     {
-        @Required
         private Fortune fortune = new Fortune();
 
         public Fortune fortune()
@@ -41,10 +39,9 @@ public class GuildConfig
             return this.fortune;
         }
 
-        @ConfigSerializable
+        @Configuration
         public static class Fortune
         {
-            @Required
             @Comment("The ID of the text channel you want users to be able to ask their fortune")
             private Long channelId = -1L;
 
@@ -70,73 +67,49 @@ public class GuildConfig
     private static GuildConfig load(Guild guild)
     {
         long guildId = guild.getIdLong();
-        YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
-            .defaultOptions(opts -> opts.shouldCopyDefaults(true))
-            .indent(2).nodeStyle(NodeStyle.BLOCK)
-            .path(Paths.get("configs", "%s.yaml".formatted(guildId)))
-            .build();
-
-        CommentedConfigurationNode node;
-        try
-        {
-            node = loader.load();
-        }
-        catch(ConfigurateException e)
-        {
-            node = CommentedConfigurationNode.root();
-        }
-
-        GuildConfig config;
-        try
-        {
-            config = node.get(GuildConfig.class, (Supplier<GuildConfig>) GuildConfig::new);
-        }
-        catch(SerializationException e)
-        {
-            throw new RuntimeException(e);
-        }
-
-        try
-        {
-            loader.save(node);
-        }
-        catch(ConfigurateException e)
-        {
-            throw new RuntimeException(e);
-        }
+        Path path = Paths.get("configs", "%s.yaml".formatted(guildId));
+        YamlConfigurationProperties properties = YamlConfigurationProperties.newBuilder().build();
+        YamlConfigurationStore<GuildConfig> store = new YamlConfigurationStore<>(GuildConfig.class, properties);
+        GuildConfig config = store.update(path);
+        CONFIGS.put(guild.getIdLong(), config);
         return config;
     }
 
-    public static boolean load(Guild guild, String url)
+    public static Optional<String> load(Guild guild, String url)
     {
         try
         {
             URL u = new URI(url).toURL();
             if(!u.getProtocol().equals("https"))
-                return false;
+            {
+                return Optional.of("URL must be https");
+            }
 
-            // Load the config from URL and map to Config object to filter out unused properties
-            CommentedConfigurationNode node = YamlConfigurationLoader.builder().url(u).build().load();
-            GuildConfig config = node.get(GuildConfig.class, (Supplier<GuildConfig>) GuildConfig::new);
-
-            // Create an empty node and update it with the Config object
-            CommentedConfigurationNode temp = CommentedConfigurationNode.root();
-            temp.set(GuildConfig.class, config);
-
-            // Finally save the config to file
-            long guildId = guild.getIdLong();
-            YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
-                    .indent(2).nodeStyle(NodeStyle.BLOCK)
-                    .path(Paths.get("configs", "%s.yaml".formatted(guildId)))
-                    .build();
-            loader.save(temp);
-
-            CONFIGS.put(guildId, config);
-            return true;
+            try(InputStream is = u.openStream())
+            {
+                GuildConfig config = YamlConfigurations.read(is, GuildConfig.class);
+                long guildId = guild.getIdLong();
+                Path path = Paths.get("configs", "%s.yaml".formatted(guildId));
+                YamlConfigurations.save(path, GuildConfig.class, config);
+                CONFIGS.put(guildId, config);
+                return Optional.empty();
+            }
+            catch(ConfigurationException e)
+            {
+                return Optional.of("Invalid YAML");
+            }
+            catch(RuntimeException e)
+            {
+                return Optional.of("Failed to load YAML");
+            }
+            catch(IOException e)
+            {
+                return Optional.of("Failed to read the attachment");
+            }
         }
-        catch(URISyntaxException | MalformedURLException | ConfigurateException e)
+        catch(URISyntaxException | MalformedURLException e)
         {
-            return false;
+            return Optional.of("Invalid attachment URL");
         }
     }
 

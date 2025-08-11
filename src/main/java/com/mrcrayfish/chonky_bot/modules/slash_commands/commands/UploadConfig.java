@@ -11,6 +11,8 @@ import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 
+import java.util.Optional;
+
 public class UploadConfig extends SlashCommand
 {
     public UploadConfig()
@@ -39,9 +41,8 @@ public class UploadConfig extends SlashCommand
         if(guild == null)
             return Response.fail("Unknown guild");
 
-        if(!GuildConfig.load(guild, attachment.getUrl()))
-            return Response.fail("Failed to process config");
+        Optional<String> result = GuildConfig.load(guild, attachment.getUrl());
+        return result.map(Response::fail).orElseGet(() -> Response.success("Successfully uploaded config"));
 
-        return Response.success("Successfully uploaded config");
     }
 }
