@@ -5,16 +5,14 @@ import com.mrcrayfish.chonky_bot.modules.slash_commands.commands.*;
 import net.dv8tion.jda.api.components.container.Container;
 import net.dv8tion.jda.api.components.separator.Separator;
 import net.dv8tion.jda.api.components.textdisplay.TextDisplay;
+import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.SubscribeEvent;
+import net.dv8tion.jda.api.interactions.commands.Command;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
+import java.util.*;
 
 /**
  * Author: MrCrayfish
@@ -60,6 +58,16 @@ public final class SlashCommands
         }, () -> {
             ChonkyBot.LOGGER.error("Unknown or unregistered command '{}'", event.getName());
         });
+    }
+
+    @SubscribeEvent
+    private static void onAutoComplete(CommandAutoCompleteInteractionEvent event)
+    {
+        SlashCommand command = COMMANDS.get(event.getInteraction().getName());
+        if(command != null)
+        {
+            command.handleAutoComplete(event);
+        }
     }
 
     static

@@ -1,6 +1,7 @@
 package com.mrcrayfish.chonky_bot.modules.slash_commands.commands;
 
 import com.mrcrayfish.chonky_bot.modules.slash_commands.Response;
+import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 
@@ -22,4 +23,6 @@ public abstract class SlashCommand
     }
 
     public abstract Response handleInteraction(SlashCommandInteractionEvent event);
+
+    public void handleAutoComplete(CommandAutoCompleteInteractionEvent event) {}
 }
