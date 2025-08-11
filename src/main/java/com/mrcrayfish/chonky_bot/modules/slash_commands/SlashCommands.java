@@ -64,6 +64,7 @@ public final class SlashCommands
 
     static
     {
+        register(new PingCommand());
         register(new PrintRulesCommand());
         register(new PruneCommand());
         register(new UploadConfig());
