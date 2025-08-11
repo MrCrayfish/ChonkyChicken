@@ -21,5 +21,5 @@ public abstract class SlashCommand
         return this.data;
     }
 
-    public abstract Response handle(SlashCommandInteractionEvent event);
+    public abstract Response handleInteraction(SlashCommandInteractionEvent event);
 }

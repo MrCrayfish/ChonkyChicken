@@ -27,7 +27,7 @@ public class PingCommand extends SlashCommand
     }
 
     @Override
-    public Response handle(SlashCommandInteractionEvent event)
+    public Response handleInteraction(SlashCommandInteractionEvent event)
     {
         event.reply(this.responses[this.random.nextInt(0, this.responses.length)]).setEphemeral(true).queue();
         return Response.success("");

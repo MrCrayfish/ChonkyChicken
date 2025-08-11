@@ -44,7 +44,7 @@ public class PruneCommand extends SlashCommand
     }
 
     @Override
-    public Response handle(SlashCommandInteractionEvent event)
+    public Response handleInteraction(SlashCommandInteractionEvent event)
     {
         // Only allow from text channels
         if(event.getChannelType() != ChannelType.TEXT)

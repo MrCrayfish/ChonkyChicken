@@ -34,7 +34,7 @@ public class PrintRulesCommand extends SlashCommand
     }
 
     @Override
-    public Response handle(SlashCommandInteractionEvent event)
+    public Response handleInteraction(SlashCommandInteractionEvent event)
     {
         if(event.getChannelType() != ChannelType.TEXT)
             return Response.fail("Only text channels are allowed to run this command");

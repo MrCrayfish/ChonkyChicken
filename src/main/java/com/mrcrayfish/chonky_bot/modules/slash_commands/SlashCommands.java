@@ -48,7 +48,7 @@ public final class SlashCommands
             return;
         Optional.ofNullable(COMMANDS.get(event.getInteraction().getName())).ifPresentOrElse(command -> {
             ChonkyBot.LOGGER.info("'{}' executed the command '/{}'", event.getUser().getName(), event.getName());
-            Response response = command.handle(event);
+            Response response = command.handleInteraction(event);
             if(!event.isAcknowledged()) {
                 String title = response.success() ? "**:thumbsup: Success**" : "**:no_entry: Command Failed**";
                 event.replyComponents(Container.of(

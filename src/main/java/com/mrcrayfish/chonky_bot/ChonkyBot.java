@@ -22,13 +22,13 @@ public class ChonkyBot
     public ChonkyBot(String token)
     {
         JDABuilder.createLight(token, Collections.emptyList())
-                .enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT)
-                .enableCache(CacheFlag.MEMBER_OVERRIDES)
-                .setEventManager(new AnnotatedEventManager())
-                .addEventListeners(
-                    SlashCommands.class,
-                    AutoDelete.class,
-                    Fortune.class
-                ).build();
+            .enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT)
+            .enableCache(CacheFlag.MEMBER_OVERRIDES)
+            .setEventManager(new AnnotatedEventManager())
+            .addEventListeners(
+                SlashCommands.class,
+                AutoDelete.class,
+                Fortune.class
+            ).build();
     }
 }

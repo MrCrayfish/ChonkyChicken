@@ -24,7 +24,7 @@ public class UploadConfig extends SlashCommand
     }
 
     @Override
-    public Response handle(SlashCommandInteractionEvent event)
+    public Response handleInteraction(SlashCommandInteractionEvent event)
     {
         Message.Attachment attachment = event.getOption("file", OptionMapping::getAsAttachment);
         if(attachment == null)

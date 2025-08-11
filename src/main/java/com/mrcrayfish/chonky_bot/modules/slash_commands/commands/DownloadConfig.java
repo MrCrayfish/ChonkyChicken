@@ -23,7 +23,7 @@ public class DownloadConfig extends SlashCommand
     }
 
     @Override
-    public Response handle(SlashCommandInteractionEvent event)
+    public Response handleInteraction(SlashCommandInteractionEvent event)
     {
         Guild guild = event.getGuild();
         if(guild == null)
