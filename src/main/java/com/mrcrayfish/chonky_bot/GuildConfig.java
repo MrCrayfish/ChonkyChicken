@@ -89,6 +89,11 @@ public final class GuildConfig
             try(InputStream is = u.openStream())
             {
                 GuildConfig config = YamlConfigurations.read(is, GuildConfig.class);
+                /* List<String> violations = validate(config);
+                if(!violations.isEmpty())
+                {
+                    return Optional.of(String.join("\n", violations));
+                }*/
                 long guildId = guild.getIdLong();
                 Path path = Paths.get("configs", "%s.yaml".formatted(guildId));
                 YamlConfigurations.save(path, GuildConfig.class, config);
@@ -126,5 +131,11 @@ public final class GuildConfig
     {
         get(guild); // Ensure generated
         return Paths.get("configs", "%s.yaml".formatted(guild.getIdLong()));
+    }
+
+    // TODO validation
+    private static List<String> validate(GuildConfig config)
+    {
+        return Collections.emptyList();
     }
 }
