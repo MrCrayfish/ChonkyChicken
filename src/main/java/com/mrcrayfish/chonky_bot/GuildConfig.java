@@ -1,6 +1,7 @@
 package com.mrcrayfish.chonky_bot;
 
 import de.exlll.configlib.*;
+import de.exlll.configlib.Configuration;
 import net.dv8tion.jda.api.entities.Guild;
 
 import java.io.IOException;
@@ -96,14 +97,22 @@ public final class GuildConfig
             }
             catch(ConfigurationException e)
             {
+                ChonkyBot.LOGGER.error("Failed to load config from URL", e);
+                Throwable cause = e.getCause();
+                if(cause != null)
+                {
+                    return Optional.of("Invalid YAML: %s".formatted(cause.getMessage()));
+                }
                 return Optional.of("Invalid YAML");
             }
             catch(RuntimeException e)
             {
+                ChonkyBot.LOGGER.error("Failed to load config from URL", e);
                 return Optional.of("Failed to load YAML");
             }
             catch(IOException e)
             {
+                ChonkyBot.LOGGER.error("Failed to load config from URL", e);
                 return Optional.of("Failed to read the attachment");
             }
         }
