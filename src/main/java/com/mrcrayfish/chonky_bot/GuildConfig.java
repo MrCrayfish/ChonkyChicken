@@ -17,6 +17,9 @@ import java.util.*;
 @Configuration
 public final class GuildConfig
 {
+    @Comment("A set of your Minecraft mods")
+    private Set<MinecraftMod> minecraftMods = new HashSet<>();
+
     @Comment("Module related properties")
     private Modules modules = new Modules();
 
@@ -28,6 +31,66 @@ public final class GuildConfig
     public Modules modules()
     {
         return this.modules;
+    }
+
+    @Configuration
+    public static class MinecraftMod
+    {
+        @Comment("[Required] The id of the mod")
+        private String id;
+
+        @Comment("[Required] The title of the mod")
+        private String title;
+
+        @Comment("[Required] A short description of the mod")
+        private String description;
+
+        @Comment("[Required] The primary website page that hosts the downloads")
+        private String primaryDownloadPage;
+
+        @Comment("[Optional] The CurseForge page to download the mod")
+        private String curseforgeDownloadPage;
+
+        @Comment("[Optional] The Modrinth page to download the mod")
+        private String modrinthDownloadPage;
+
+        @Comment("[Required] A URL to an image to display in the container. Must be a square.")
+        private String thumbnailUrl;
+
+        public String id()
+        {
+            return this.id;
+        }
+
+        public String title()
+        {
+            return this.title;
+        }
+
+        public String description()
+        {
+            return this.description;
+        }
+
+        public String primaryDownloadPage()
+        {
+            return this.primaryDownloadPage;
+        }
+
+        public String curseforgeDownloadPage()
+        {
+            return this.curseforgeDownloadPage;
+        }
+
+        public String modrinthDownloadPage()
+        {
+            return this.modrinthDownloadPage;
+        }
+
+        public String thumbnailUrl()
+        {
+            return this.thumbnailUrl;
+        }
     }
 
     @Configuration

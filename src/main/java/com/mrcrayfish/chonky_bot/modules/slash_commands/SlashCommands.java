@@ -77,5 +77,6 @@ public final class SlashCommands
         register(new PruneCommand());
         register(new UploadConfig());
         register(new DownloadConfig());
+        register(new LinkModCommand());
     }
 }
