@@ -78,5 +78,6 @@ public final class SlashCommands
         register(new UploadConfig());
         register(new DownloadConfig());
         register(new LinkModCommand());
+        register(new DeviceModCommand());
     }
 }
