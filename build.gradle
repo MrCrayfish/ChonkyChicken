@@ -18,3 +18,20 @@ dependencies {
         exclude module: 'opus-java' // Disables audio natives
     }
 }
+
+tasks.register('setupRunDir', Copy) {
+    if(!file("$projectDir/run/.env").exists()) {
+        from("$projectDir/.env.example")
+        into("$projectDir/run/")
+        rename { ".env" }
+    }
+}
+
+tasks.register('runChonky', JavaExec) {
+    dependsOn('setupRunDir')
+    group = 'application'
+    description = 'Runs the Chonky Chicken Discord bot'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.mrcrayfish.chonky_bot.Main'
+    workingDir = file("$projectDir/run")
+}
