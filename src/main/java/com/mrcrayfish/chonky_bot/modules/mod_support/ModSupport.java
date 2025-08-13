@@ -26,6 +26,13 @@ public class ModSupport
     @SubscribeEvent
     private static void onThreadCreated(ChannelCreateEvent event)
     {
+        if(!event.isFromGuild())
+            return;
+
+        GuildConfig config = GuildConfig.get(event.getGuild());
+        if(!config.modules().modSupport().enabled())
+            return;
+
         if(!event.getChannelType().isThread())
             return;
 
@@ -55,15 +62,16 @@ public class ModSupport
     @SubscribeEvent
     private static void onButtonInteraction(ButtonInteractionEvent event)
     {
+        Guild guild = event.getGuild();
+        if(guild == null)
+            return;
+
+        GuildConfig config = GuildConfig.get(guild);
+        if(!config.modules().modSupport().enabled())
+            return;
+
         if(event.getComponentId().startsWith("mod_support_resolved"))
         {
-            Guild guild = event.getGuild();
-            if(guild == null)
-            {
-                event.replyComponents(responseContainer(false, "Invalid interaction")).useComponentsV2().setEphemeral(true).queue();
-                return;
-            }
-
             if(!event.getChannelType().isThread())
             {
                 event.replyComponents(responseContainer(false, "Invalid interaction")).useComponentsV2().setEphemeral(true).queue();
@@ -79,7 +87,6 @@ public class ModSupport
             }
 
             // Make sure the interaction came from the correct support forum channel
-            GuildConfig config = GuildConfig.get(guild);
             long channel = config.modules().modSupport().channelId();
             if(parent.getIdLong() != channel)
             {

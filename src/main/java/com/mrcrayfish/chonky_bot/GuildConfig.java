@@ -96,8 +96,14 @@ public final class GuildConfig
     @Configuration
     public static class Modules
     {
+        private AutoDelete autoDelete = new AutoDelete();
         private Fortune fortune = new Fortune();
         private ModSupport modSupport = new ModSupport();
+
+        public AutoDelete autoDelete()
+        {
+            return this.autoDelete;
+        }
 
         public Fortune fortune()
         {
@@ -110,10 +116,30 @@ public final class GuildConfig
         }
 
         @Configuration
+        public static class AutoDelete
+        {
+            @Comment("If set to true, this module will be enabled")
+            private Boolean enabled = false;
+
+            public boolean enabled()
+            {
+                return this.enabled;
+            }
+        }
+
+        @Configuration
         public static class Fortune
         {
+            @Comment("If set to true, this module will be enabled")
+            private Boolean enabled = false;
+
             @Comment("The ID of the text channel you want users to be able to ask their fortune")
             private Long channelId = -1L;
+
+            public boolean enabled()
+            {
+                return this.enabled;
+            }
 
             public long channelId()
             {
@@ -124,11 +150,19 @@ public final class GuildConfig
         @Configuration
         public static class ModSupport
         {
+            @Comment("If set to true, this module will be enabled")
+            private Boolean enabled = false;
+
             @Comment("The ID of the forum channel users can post mod support tickets")
             private Long channelId = -1L;
 
             @Comment("The ID of the forum tag to indicate a thread ticket as solved")
             private Long solvedTagId = -1L;
+
+            public boolean enabled()
+            {
+                return this.enabled;
+            }
 
             public long channelId()
             {

@@ -193,6 +193,13 @@ public final class Fortune
     @SubscribeEvent
     private static void onMessageReceived(MessageReceivedEvent event)
     {
+        if(!event.isFromGuild())
+            return;
+
+        GuildConfig config = GuildConfig.get(event.getGuild());
+        if(!config.modules().fortune().enabled())
+            return;
+
         if(event.getAuthor().isBot() || event.getAuthor().isSystem())
             return;
 

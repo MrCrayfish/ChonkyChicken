@@ -1,6 +1,7 @@
 package com.mrcrayfish.chonky_bot.modules.autodelete;
 
 import com.mrcrayfish.chonky_bot.ChonkyBot;
+import com.mrcrayfish.chonky_bot.GuildConfig;
 import com.mrcrayfish.chonky_bot.Util;
 import com.mrcrayfish.chonky_bot.modules.autodelete.rules.DeletionRule;
 import com.mrcrayfish.chonky_bot.modules.autodelete.rules.ContainsExternalAttachmentLink;
@@ -74,12 +75,26 @@ public final class AutoDelete
     @SubscribeEvent
     private static void onMessageReceived(MessageReceivedEvent event)
     {
+        if(!event.isFromGuild())
+            return;
+
+        GuildConfig config = GuildConfig.get(event.getGuild());
+        if(!config.modules().autoDelete().enabled())
+            return;
+
         deleteMessageIfMatchesRule(event.getMessage());
     }
 
     @SubscribeEvent
     private static void onMessageUpdated(MessageUpdateEvent event)
     {
+        if(!event.isFromGuild())
+            return;
+
+        GuildConfig config = GuildConfig.get(event.getGuild());
+        if(!config.modules().autoDelete().enabled())
+            return;
+
         deleteMessageIfMatchesRule(event.getMessage());
     }
 }
