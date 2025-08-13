@@ -97,10 +97,16 @@ public final class GuildConfig
     public static class Modules
     {
         private Fortune fortune = new Fortune();
+        private ModSupport modSupport = new ModSupport();
 
         public Fortune fortune()
         {
             return this.fortune;
+        }
+
+        public ModSupport modSupport()
+        {
+            return this.modSupport;
         }
 
         @Configuration
@@ -112,6 +118,26 @@ public final class GuildConfig
             public long channelId()
             {
                 return this.channelId;
+            }
+        }
+
+        @Configuration
+        public static class ModSupport
+        {
+            @Comment("The ID of the forum channel users can post mod support tickets")
+            private Long channelId = -1L;
+
+            @Comment("The ID of the forum tag to indicate a thread ticket as solved")
+            private Long solvedTagId = -1L;
+
+            public long channelId()
+            {
+                return this.channelId;
+            }
+
+            public Long solvedTagId()
+            {
+                return this.solvedTagId;
             }
         }
     }
