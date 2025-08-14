@@ -35,13 +35,6 @@ public final class SlashCommands
     @SubscribeEvent
     private static void onReady(ReadyEvent event)
     {
-        // Temp
-        Guild guild = event.getJDA().getGuildById(336389026586165261L);
-        if(guild != null)
-        {
-            guild.deleteCommandById(842645567032918046L).queue();
-        }
-
         // Update slash commands
         event.getJDA().updateCommands().addCommands(SlashCommands.all().values().stream().map(SlashCommand::data).toList()).queue();
     }
