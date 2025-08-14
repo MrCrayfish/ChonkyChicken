@@ -9,7 +9,6 @@ import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInterac
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.SubscribeEvent;
-import net.dv8tion.jda.api.interactions.commands.Command;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -75,8 +74,8 @@ public final class SlashCommands
         register(new PingCommand());
         register(new PrintRulesCommand());
         register(new PruneCommand());
-        register(new UploadConfig());
-        register(new DownloadConfig());
+        register(new UploadConfigCommand());
+        register(new DownloadConfigCommand());
         register(new LinkModCommand());
         register(new DeviceModCommand());
     }

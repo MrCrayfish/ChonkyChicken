@@ -13,9 +13,9 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 
 import java.util.Optional;
 
-public class UploadConfig extends SlashCommand
+public class UploadConfigCommand extends SlashCommand
 {
-    public UploadConfig()
+    public UploadConfigCommand()
     {
         super(Commands.slash("upload_config", "Uploads a config file to the bot"));
         this.data.addOption(OptionType.ATTACHMENT, "file", "A YAML file", true);
