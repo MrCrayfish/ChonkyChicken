@@ -1,6 +1,7 @@
 package com.mrcrayfish.chonky_bot;
 
 import com.mrcrayfish.chonky_bot.modules.fortune.Fortune;
+import com.mrcrayfish.chonky_bot.modules.introductions.Introductions;
 import com.mrcrayfish.chonky_bot.modules.mod_support.ModSupport;
 import com.mrcrayfish.chonky_bot.modules.slash_commands.SlashCommands;
 import com.mrcrayfish.chonky_bot.modules.autodelete.AutoDelete;
@@ -30,6 +31,7 @@ public class ChonkyBot
                 SlashCommands.class,
                 AutoDelete.class,
                 Fortune.class,
+                Introductions.class,
                 ModSupport.class
             ).build();
     }

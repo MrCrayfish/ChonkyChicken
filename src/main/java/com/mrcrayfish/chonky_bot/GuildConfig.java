@@ -98,6 +98,7 @@ public final class GuildConfig
     {
         private AutoDelete autoDelete = new AutoDelete();
         private Fortune fortune = new Fortune();
+        private Introductions introductions = new Introductions();
         private ModSupport modSupport = new ModSupport();
 
         public AutoDelete autoDelete()
@@ -108,6 +109,11 @@ public final class GuildConfig
         public Fortune fortune()
         {
             return this.fortune;
+        }
+
+        public Introductions introductions()
+        {
+            return this.introductions;
         }
 
         public ModSupport modSupport()
@@ -144,6 +150,34 @@ public final class GuildConfig
             public long channelId()
             {
                 return this.channelId;
+            }
+        }
+
+        @Configuration
+        public static class Introductions
+        {
+            @Comment("If set to true, this module will be enabled")
+            private Boolean enabled = false;
+
+            @Comment("The ID of the text channel where users post their introductions")
+            private Long channelId = -1L;
+
+            @Comment("The emoji to use to automatically react on new messages.")
+            private String reactionEmoji = ":wave:";
+
+            public boolean enabled()
+            {
+                return this.enabled;
+            }
+
+            public long channelId()
+            {
+                return this.channelId;
+            }
+
+            public String reactionEmoji()
+            {
+                return this.reactionEmoji;
             }
         }
 
