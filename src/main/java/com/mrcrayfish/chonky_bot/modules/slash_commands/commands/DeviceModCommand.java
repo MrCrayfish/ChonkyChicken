@@ -20,8 +20,8 @@ public class DeviceModCommand extends SlashCommand
     public Response handleInteraction(SlashCommandInteractionEvent event)
     {
         Container container = Container.of(
-            TextDisplay.of("## %s  %s".formatted(Emoji.INFO, "The Device Mod has been Archived")),
-            TextDisplay.of("The Device Mod has been discontinued. This means that the mod will no longer be updated and support will not be provided. MrCrayfish no longer enjoys developing the mod and would rather focus on other projects. Thank you for understanding :thumbsup:")
+            TextDisplay.of("## %s  %s".formatted(Emoji.INFO, "The Device Mod has been Discontinued")),
+            TextDisplay.of("This means that the mod will no longer be updated and support will not be provided. MrCrayfish no longer enjoys developing the mod and would rather focus on other projects.\n\nThank you for understanding :thumbsup:")
         ).withAccentColor(0x5A82E2);
         event.getMessageChannel().sendMessageComponents(container).useComponentsV2().queue();
         return Response.success("Success");
