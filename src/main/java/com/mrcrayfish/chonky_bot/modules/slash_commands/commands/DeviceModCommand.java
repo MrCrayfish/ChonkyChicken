@@ -23,7 +23,10 @@ public class DeviceModCommand extends SlashCommand
             TextDisplay.of("## %s  %s".formatted(Emoji.INFO, "The Device Mod has been Discontinued")),
             TextDisplay.of("This means that the mod will no longer be updated and support will not be provided. MrCrayfish no longer enjoys developing the mod and would rather focus on other projects.\n\nThank you for understanding :thumbsup:")
         ).withAccentColor(0x5A82E2);
-        event.getMessageChannel().sendMessageComponents(container).useComponentsV2().queue();
+        event.getMessageChannel().sendMessageComponents(
+            container,
+            TextDisplay.of("-# *Command executed by `%s` - %s*".formatted(event.getUser().getEffectiveName(), event.getUser().getIdLong()))
+        ).useComponentsV2().queue();
         return Response.success("Success");
     }
 }

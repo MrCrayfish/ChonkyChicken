@@ -56,7 +56,10 @@ public class LinkModCommand extends SlashCommand
         ));
         components.add(Separator.create(true, Separator.Spacing.LARGE));
         components.add(this.buildDownloadDisplay(mod));
-        event.getMessageChannel().sendMessageComponents(Container.of(components)).useComponentsV2().queue();
+        event.getMessageChannel().sendMessageComponents(
+            Container.of(components),
+            TextDisplay.of("-# *Command executed by `%s` - %s*".formatted(event.getUser().getEffectiveName(), event.getUser().getIdLong()))
+        ).useComponentsV2().queue();
         return Response.success("Success");
     }
 
