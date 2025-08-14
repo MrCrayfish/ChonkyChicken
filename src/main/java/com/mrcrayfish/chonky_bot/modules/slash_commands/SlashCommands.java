@@ -5,6 +5,7 @@ import com.mrcrayfish.chonky_bot.modules.slash_commands.commands.*;
 import net.dv8tion.jda.api.components.container.Container;
 import net.dv8tion.jda.api.components.separator.Separator;
 import net.dv8tion.jda.api.components.textdisplay.TextDisplay;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
@@ -35,7 +36,11 @@ public final class SlashCommands
     private static void onReady(ReadyEvent event)
     {
         // Temp
-        event.getJDA().deleteCommandById(842645567032918046L).queue();
+        Guild guild = event.getJDA().getGuildById(336389026586165261L);
+        if(guild != null)
+        {
+            guild.deleteCommandById(842645567032918046L).queue();
+        }
 
         // Update slash commands
         event.getJDA().updateCommands().addCommands(SlashCommands.all().values().stream().map(SlashCommand::data).toList()).queue();
