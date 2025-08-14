@@ -79,5 +79,6 @@ public final class SlashCommands
         register(new DownloadConfigCommand());
         register(new LinkModCommand());
         register(new DeviceModCommand());
+        register(new VehicleModCommand());
     }
 }
