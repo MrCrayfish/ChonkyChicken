@@ -34,6 +34,9 @@ public final class SlashCommands
     @SubscribeEvent
     private static void onReady(ReadyEvent event)
     {
+        // Temp
+        event.getJDA().deleteCommandById(842645567032918046L).queue();
+
         // Update slash commands
         event.getJDA().updateCommands().addCommands(SlashCommands.all().values().stream().map(SlashCommand::data).toList()).queue();
     }
