@@ -202,6 +202,9 @@ public final class Fortune
 
         if(event.getAuthor().isBot() || event.getAuthor().isSystem())
             return;
+        
+        if(!event.getMessage().getContentRaw().endsWith("?"))
+            return;
 
         Guild guild = event.getGuild();
         long channel = GuildConfig.get(guild).modules().fortune().channelId();
